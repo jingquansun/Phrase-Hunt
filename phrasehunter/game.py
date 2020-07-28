@@ -24,6 +24,7 @@ class Game:
         continue
       else:
         self.lives -= 1
+        self.check_lives()
         print("\nSorry, this letter is not in the phrase, please guess again. You now have {} lives.".format(self.lives))
         continue
           

@@ -28,3 +28,6 @@ class Phrase:
     for letter in self.characters:
       print(letter.show_everything(), end="")
 
+  def reset_was_guessed(self):
+    for letter in self.characters:
+      letter.reset_guess()

@@ -12,8 +12,6 @@ class Character:
     return self.was_guessed
       
   def show(self):
-    if isinstance(self.original, type(None)):
-      return " "
     if self.was_guessed:
       return self.original
     elif self.original == " ":

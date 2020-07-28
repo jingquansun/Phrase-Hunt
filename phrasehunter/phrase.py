@@ -17,6 +17,7 @@ class Phrase:
     
   def correct_guess(self, guess):
     count = 0
+    guess = str(guess)
     for letter in self.characters:
       if letter.equal(guess):
         count += 1

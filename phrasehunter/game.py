@@ -17,19 +17,15 @@ class Game:
     
     while not self.current.guess_complete():
       guess = self.get_input()
-      if isinstance(guess, type(None)):
-        self.lost_game()
-        self.end_game()
-      else:  
-        self.guessed_char.append(guess)
-        if self.current.correct_guess(guess):
-          print("\nGood guess! That is correct!\n")
-          self.print_current()
-          continue
-        else:
-          self.lives -= 1
-          print("\nSorry, this letter is not in the phrase, please guess again. You now have {} lives.".format(self.lives))
-          continue
+      self.guessed_char.append(guess)
+      if self.current.correct_guess(guess):
+        print("\nGood guess! That is correct!\n")
+        self.current.entire_phrase()
+        continue
+      else:
+        self.lives -= 1
+        print("\nSorry, this letter is not in the phrase, please guess again. You now have {} lives.".format(self.lives))
+        continue
           
     self.complete()
     self.end_game()
@@ -40,19 +36,27 @@ class Game:
         guess = input("\nPlease enter a letter:    ")
       except ValueError as err:
         self.lives -= 1
+        self.check_lives()
         print("\nThis is invalid, {}. You now have {} lives.".format(err, self.lives))
         continue
       if not guess.isalpha() or len(guess) != 1:
         self.lives -= 1
+        self.check_lives()
         print("\nThis is invalid. You now have {} lives".format(self.lives))
         continue
       elif guess in self.guessed_char:
         self.lives -= 1
+        self.check_lives()
         print("\nYou've already guessed this letter. You now have {} lives.".format(self.lives))
         continue
       else:
         return guess
-  
+      
+  def check_lives(self):
+    if self.lives < 1:
+      self.lost_game()
+      self.end_game()
+        
   def complete(self):
     if self.current.guess_complete():
       print("\nCongratulations! You guessed the phrase!")
@@ -60,18 +64,17 @@ class Game:
       self.lost_game()
       
   def end_game(self):
-    choice = input("Would you like to play again? (Yes/No):  ")
-    if choice.lower() == "yes":
-      self.__init__(phrases)
-      self.start_game()
-    else:
+    choice = input("\nWould you like to play again? (Yes/No):  ")
+    if choice.lower() != "yes":
       print("\nThanks for playing!")
+    else:
+      self.current = random.choice(self.phrase)
+      self.lives = 5
+      self.guessed_char = []
+      self.start_game()
   
   def lost_game(self):
       print("\nSorry, you're out of lives. Better luck next time!")
       print("The correct phrase was: ")
-      print(self.current.show_everything())
-                   
-  def print_current(self):
-      print(self.current.entire_phrase())
+      self.current.show_everything()
      

@@ -1,30 +1,30 @@
-from phrasehunter.character import Character
 
-class Phrase:
-  def __init__(self, phrase):
-    letters = list(phrase)
-    self.characters = [Character(letter) for letter in letters]
+class Character:
+  def __init__(self, original):
+    if type(original) != str or len(original) != 1:
+      raise ValueError("This must be a one letter character.")
+    self.original = original
+    self.was_guessed = False
     
-  def guess_complete(self):
-    guessed_phrase = []
-    for letter in self.characters:
-      guessed_phrase.append(letter.show())
-    return "_" not in guessed_phrase
-  
-  def entire_phrase(self):
-    for letter in self.characters:
-      print(letter.show(), end="")
+  def update(self, guess):
+    if guess.upper() == self.original.upper():
+      self.was_guessed = True
+    return self.was_guessed
+      
+  def show(self):
+    if self.was_guessed:
+      return self.original
+    elif self.original == " ":
+      return " "
+    else:
+      return "_" 
+
+  def set_guess(self):
+    self.was_guessed = True 
     
-  def correct_guess(self, guess):
-    count = 0
-    guess = str(guess)
-    for letter in self.characters:
-      if letter.equal(guess):
-        count += 1
-        letter.set_guess()
-    return count >= 1
+  def equal(self, guess):
+    return self.original.upper() == guess.upper()
   
   def show_everything(self):
-    for letter in self.characters:
-      print(letter.show_everything(), end="")
-
+    return self.original
+    

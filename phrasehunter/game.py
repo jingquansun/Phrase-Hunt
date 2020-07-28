@@ -68,7 +68,6 @@ class Game:
     choice = input("\nWould you like to play again? (Yes/No):  ")
     if choice.lower() != "yes":
       print("\nThanks for playing!")
-      self.phrase.clear()
     else:
       self.current = random.choice(self.phrase)
       self.lives = 5

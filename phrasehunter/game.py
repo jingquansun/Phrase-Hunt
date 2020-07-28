@@ -24,7 +24,7 @@ class Game:
         continue
       else:
         self.lives -= 1
-        self.check_lives()
+        self.check_game(guess)
         print("\nSorry, this letter is not in the phrase, please guess again. You now have {} lives.".format(self.lives))
         continue
           
@@ -37,24 +37,24 @@ class Game:
         guess = input("\nPlease enter a letter:    ")
       except ValueError as err:
         self.lives -= 1
-        self.check_lives()
+        self.check_game(guess)
         print("\nThis is invalid, {}. You now have {} lives.".format(err, self.lives))
         continue
       if not guess.isalpha() or len(guess) != 1:
         self.lives -= 1
-        self.check_lives()
+        self.check_game(guess)
         print("\nThis is invalid. You now have {} lives".format(self.lives))
         continue
       elif guess in self.guessed_char:
         self.lives -= 1
-        self.check_lives()
+        self.check_game(guess)
         print("\nYou've already guessed this letter. You now have {} lives.".format(self.lives))
         continue
       else:
-        return guess
+        return str(guess)
       
-  def check_lives(self):
-    if self.lives < 1:
+  def check_game(self, guess):
+    if self.lives < 1 or guess is None:
       self.lost_game()
       self.end_game()
         
@@ -68,6 +68,7 @@ class Game:
     choice = input("\nWould you like to play again? (Yes/No):  ")
     if choice.lower() != "yes":
       print("\nThanks for playing!")
+      self.phrase.clear()
     else:
       self.current = random.choice(self.phrase)
       self.lives = 5

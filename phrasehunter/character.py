@@ -21,6 +21,9 @@ class Character:
 
   def set_guess(self):
     self.was_guessed = True 
+  
+  def reset_guess(self):
+    self.was_guessed = False
     
   def equal(self, guess):
     return self.original.upper() == guess.upper()

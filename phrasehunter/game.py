@@ -69,13 +69,19 @@ class Game:
     if choice.lower() != "yes":
       print("\nThanks for playing!")
     else:
-      self.current = random.choice(self.phrase)
       self.lives = 5
       self.guessed_char = []
+      self.reset_guess()
+      self.current = random.choice(self.phrase)
       self.start_game()
+      
   
   def lost_game(self):
       print("\nSorry, you're out of lives. Better luck next time!")
       print("The correct phrase was: ")
       self.current.show_everything()
+      
+  def reset_guess(self):
+    for p in self.phrase:
+      p.reset_was_guessed()
      

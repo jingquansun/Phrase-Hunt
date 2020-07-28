@@ -14,7 +14,7 @@ class Phrase:
   def entire_phrase(self):
     for letter in self.characters:
       print(letter.show(), end="")
-  
+    
   def correct_guess(self, guess):
     count = 0
     for letter in self.characters:
@@ -26,6 +26,4 @@ class Phrase:
   def show_everything(self):
     for letter in self.characters:
       print(letter.show_everything(), end="")
-    
-            
-        
+
